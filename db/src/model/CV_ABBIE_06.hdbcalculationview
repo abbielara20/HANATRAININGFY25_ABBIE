@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="HANA_TRAINING.model::CV_ABBIE_06" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="CV_ABBIE_06"/>
+<localVariables>
+  <variable id="IP_ROLLINDATE" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="NVARCHAR" length="10" mandatory="false" defaultExpressionLanguage="SQL" defaultValue="All">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="SingleValue"/>
+    </variableProperties>
+  </variable>
+  <variable id="IP_ROLLOFFDATE" parameter="true">
+    <descriptions defaultDescription=""/>
+    <variableProperties datatype="NVARCHAR" length="10" mandatory="false" defaultExpressionLanguage="SQL" defaultValue="All">
+      <valueDomain type="empty"/>
+      <selection multiLine="false" type="SingleValue"/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources>
+  <DataSource id="HANA_TRAINING::TB_PROJECT">
+    <resourceUri>HANA_TRAINING::TB_PROJECT</resourceUri>
+  </DataSource>
+  <DataSource id="HANA_TRAINING::TB_PROJECTID_INFO">
+    <resourceUri>HANA_TRAINING::TB_PROJECTID_INFO</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner" filterExpressionLanguage="SQL">
+    <viewAttributes>
+      <viewAttribute id="SAPNO"/>
+      <viewAttribute id="ROLLINDATE"/>
+      <viewAttribute id="ROLLOFFDATE"/>
+      <viewAttribute id="PROJECTNAME"/>
+      <viewAttribute hidden="true" id="JOIN$PROJECTID$PROJECTID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="HANA_TRAINING::TB_PROJECT">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAPNO" source="SAPNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROLLINDATE" source="ROLLINDATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ROLLOFFDATE" source="ROLLOFFDATE"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROJECTID$PROJECTID" source="PROJECTID"/>
+    </input>
+    <input node="HANA_TRAINING::TB_PROJECTID_INFO">
+      <mapping xsi:type="Calculation:AttributeMapping" target="PROJECTNAME" source="PROJECTNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$PROJECTID$PROJECTID" source="PROJECTID"/>
+    </input>
+    <filter>&quot;ROLLINDATE&quot; &gt;= (CASE '$$IP_ROLLINDATE$$' 
+	 WHEN 'All' then '1900-01-01'
+	 ELSE '$$IP_ROLLINDATE$$'
+ END) AND
+ &quot;ROLLOFFDATE&quot; &lt;= (CASE '$$IP_ROLLOFFDATE$$'
+	 WHEN 'All' then '9999-12-31'
+	 ELSE '$$IP_ROLLOFFDATE$$'
+ END)</filter>
+    <joinAttribute name="JOIN$PROJECTID$PROJECTID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="PROJECTNAME"/>
+      <viewAttribute id="COUNT" aggregationType="count"/>
+      <viewAttribute id="SAPNO"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Join_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="COUNT" source="SAPNO"/>
+    </input>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Aggregation_1">
+  <attributes>
+    <attribute id="PROJECTNAME" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="PROJECTNAME"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="PROJECTNAME"/>
+    </attribute>
+    <attribute id="COUNT" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SAPNO_1"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="COUNT"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/></logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="276"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="HANA_TRAINING::TB_PROJECT" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250.673828125"/>
+    </shape>
+    <shape modelObjectName="HANA_TRAINING::TB_PROJECTID_INFO" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="298.01171875"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="185"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="HANA_TRAINING.model::CV_ABBIE_03" applyPrivilegeType="NONE" dataCategory="DIMENSION" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="CV_ABBIE_03"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="HANA_TRAINING::TB_PROJECT">
+    <resourceUri>HANA_TRAINING::TB_PROJECT</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="SAPNO"/>
+      <viewAttribute id="MANAGERSAPNO"/>
+      <viewAttribute id="SAPNO_1" aggregationType="count"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="HANA_TRAINING::TB_PROJECT">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAPNO_1" source="SAPNO"/>
+    </input>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Aggregation_1">
+  <attributes>
+    <attribute id="SAPNO_1" order="1">
+      <descriptions defaultDescription="SAPNO_1"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="SAPNO_1"/>
+    </attribute>
+    <attribute id="MANAGERSAPNO" order="2">
+      <descriptions defaultDescription="MANAGERSAPNO"/>
+      <keyMapping columnObjectName="Aggregation_1" columnName="MANAGERSAPNO"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/></logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="194"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

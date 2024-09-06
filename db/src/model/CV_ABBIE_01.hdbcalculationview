@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="HANA_TRAINING.model::CV_ABBIE_01" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" hierarchyGeneration="SQL" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="true" application="BAS">
+<descriptions defaultDescription="CV_ABBIE_01"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="HANA_TRAINING::TB_SKILLSET">
+    <resourceUri>HANA_TRAINING::TB_SKILLSET</resourceUri>
+  </DataSource>
+  <DataSource id="HANA_TRAINING::TB_SKILL_INFO">
+    <resourceUri>HANA_TRAINING::TB_SKILL_INFO</resourceUri>
+  </DataSource>
+  <DataSource id="HANA_TRAINING::TB_EMPLOYEE">
+    <resourceUri>HANA_TRAINING::TB_EMPLOYEE</resourceUri>
+  </DataSource>
+</dataSources>
+<snapshotProcedures/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="CN_N" joinType="inner" multiJoinNode="Join_1" multiJoinCentralTable="HANA_TRAINING::TB_EMPLOYEE" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="SKILLNAME"/>
+      <viewAttribute id="SAPNO"/>
+      <viewAttribute hidden="true" id="JOIN$SKILLID$SKILLID"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="HANA_TRAINING::TB_SKILLSET">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SAPNO" source="SAPNO"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SKILLID$SKILLID" source="SKILLID"/>
+    </input>
+    <input node="HANA_TRAINING::TB_SKILL_INFO">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SKILLNAME" source="SKILLNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SKILLID$SKILLID" source="SKILLID"/>
+    </input>
+    <joinAttribute name="JOIN$SKILLID$SKILLID"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="CN_N" joinType="inner" filterExpressionLanguage="SQL" multiJoinNode="Join_1" multiJoinCentralTable="HANA_TRAINING::TB_EMPLOYEE" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="FIRSTNAME"/>
+      <viewAttribute id="LASTNAME"/>
+      <viewAttribute id="DELETEFLAG"/>
+      <viewAttribute id="SKILLNAME"/>
+      <viewAttribute hidden="true" id="JOIN$SAPNO$SAPNO"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="HANA_TRAINING::TB_EMPLOYEE">
+      <mapping xsi:type="Calculation:AttributeMapping" target="FIRSTNAME" source="FIRSTNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LASTNAME" source="LASTNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DELETEFLAG" source="DELETEFLAG"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SAPNO$SAPNO" source="SAPNO"/>
+    </input>
+    <input node="Join_1_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SKILLNAME" source="SKILLNAME"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$SAPNO$SAPNO" source="SAPNO"/>
+    </input>
+    <filter>&quot;DELETEFLAG&quot; != '1' AND &quot;SKILLNAME&quot; IN ('SAP HANA', 'SAP UI5')</filter>
+    <joinAttribute name="JOIN$SAPNO$SAPNO"/>
+  </calculationView>
+</calculationViews>
+
+<logicalModel id="Join_1_2" filterExpressionLanguage="SQL">
+  <attributes>
+    <attribute id="FIRSTNAME" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FIRSTNAME"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="FIRSTNAME"/>
+    </attribute>
+    <attribute id="LASTNAME" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LASTNAME"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="LASTNAME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+    
+  
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="200"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="HANA_TRAINING::TB_EMPLOYEE" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="-42" y="37"/>
+      <rectangleSize width="260.67578125"/>
+    </shape>
+    <shape modelObjectName="HANA_TRAINING::TB_SKILLSET" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="251.998046875"/>
+    </shape>
+    <shape modelObjectName="HANA_TRAINING::TB_SKILL_INFO" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="263.998046875"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
