@@ -1,0 +1,33 @@
+{
+  "HANA_TRAINING.data::DUMMY": {
+    "target": {
+      "object": "DUMMY",
+      "schema": "SYS"
+    }
+  },
+  "HANA_TRAINING.data::EMPLOYEE": {
+    "target": {
+      "object": "HANA_TRAINING::TB_EMPLOYEE"
+    }
+  },
+  "HANA_TRAINING.data::EMPSEQNO": {
+    "target": {
+      "object": "HANA_TRAINING.sequence::employee"
+    }
+  },
+  "HANA_TRAINING.data::SKILLSET": {
+    "target": {
+      "object": "HANA_TRAINING::TB_SKILLSET"
+    }
+  },
+  "HANA_TRAINING.data::SKILLINFO": {
+    "target": {
+      "object": "HANA_TRAINING::TB_SKILL_INFO"
+    }
+  },
+  "HANA_TRAINING.data::SKILLSEQNO": {
+    "target": {
+      "object": "HANA_TRAINING.sequence::skill"
+    }
+  }
+}

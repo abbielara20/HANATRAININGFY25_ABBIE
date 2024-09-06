@@ -1,0 +1,23 @@
+PROCEDURE "HANA_TRAINING.procedure::SP_CREATE_EMPLOYEE"(
+    IN ip_row TABLE (
+      SAPNO INTEGER,
+      EMPEID NVARCHAR(50),
+      FIRSTNAME NVARCHAR(100),
+      LASTNAME NVARCHAR(100),
+      BIRTHDATE DATE,
+      AGE INTEGER,
+      HIREDATE DATE,
+      DELETEFLAG NVARCHAR(1)
+    ),
+    OUT op_message NVARCHAR(1000)
+  ) 
+  LANGUAGE SQLSCRIPT 
+  SQL SECURITY INVOKER AS 
+  --DEFAULT SCHEMA <default_schema_name>
+  -- READS SQL DATA AS
+BEGIN
+  INSERT INTO "HANA_TRAINING.data::EMPLOYEE"
+  SELECT * FROM :ip_row;
+
+  op_message = 'Data successfully updated!';
+END
