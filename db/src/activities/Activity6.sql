@@ -1,0 +1,30 @@
+--- A
+SELECT * FROM "11391074_1"."HANA_TRAINING.function::TBLFUNC1"()
+
+--- B
+SELECT * FROM "11391074_1"."HANA_TRAINING.function::TBLFUNC2"()
+
+--- C
+SELECT "11391074_1"."HANA_TRAINING.function::TBLFUNC3"(10018/*SAPNO <INTEGER>*/).FULLNAME AS FULLNAME
+FROM DUMMY
+
+--- D
+SELECT * FROM "11391074_1"."HANA_TRAINING.function::TBLFUNC4"('lester.j.a.tolentino'/*EMPEID <NVARCHAR(100)>*/)
+
+--- E
+SELECT * FROM "11391074_1"."HANA_TRAINING.function::TBLFUNC5"('2018-03-21'/*ROLLINDATE <DATE>*/,
+                                                              '2019-03-21'/*ROLLOFFDATE <DATE>*/)
+                                                              
+--- F
+SELECT "11391074_1"."HANA_TRAINING.function::TBLFUNC6"(10001/*SAPNO <INTEGER>*/).EMPCOUNT AS EMPCOUNT
+FROM DUMMY
+
+--- G
+SELECT * FROM "11391074_1"."HANA_TRAINING.function::TBLFUNC7"()
+
+--- H
+SELECT * FROM "11391074_1"."HANA_TRAINING.function::TBLFUNC8"()
+
+--- I
+SELECT * FROM "11391074_1"."HANA_TRAINING.function::TBLFUNC9"()
+

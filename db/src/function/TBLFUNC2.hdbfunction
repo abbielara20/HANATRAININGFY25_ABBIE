@@ -1,0 +1,13 @@
+FUNCTION "HANA_TRAINING.function::TBLFUNC2"( )
+    RETURNS TABLE (
+        EMPCOUNT INTEGER
+    )
+    LANGUAGE SQLSCRIPT
+    SQL SECURITY INVOKER AS
+BEGIN
+    /*****************************
+        Write your function logic
+    ****************************/
+    RETURN
+    SELECT COUNT(SAPNO) AS EMPCOUNT FROM "HANA_TRAINING.data::PROJECT" GROUP BY MANAGERSAPNO;
+END;

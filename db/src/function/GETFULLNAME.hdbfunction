@@ -1,0 +1,10 @@
+FUNCTION "HANA_TRAINING.function::GET_FULLNAME"( SAPNO INTEGER )
+    RETURNS FULLNAME NVARCHAR(100)
+    LANGUAGE SQLSCRIPT
+    SQL SECURITY INVOKER AS
+BEGIN
+    /*****************************
+        Write your function logic
+    ****************************/
+    SELECT FIRSTNAME || ' ' || LASTNAME INTO FULLNAME FROM "HANA_TRAINING.data::EMPLOYEE" WHERE SAPNO = :SAPNO;
+END;

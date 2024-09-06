@@ -1,0 +1,12 @@
+FUNCTION "HANA_TRAINING.function::TBLFUNC6"( SAPNO INTEGER )
+    RETURNS EMPCOUNT INTEGER
+    LANGUAGE SQLSCRIPT
+    SQL SECURITY INVOKER AS
+BEGIN
+    /*****************************
+        Write your function logic
+    ****************************/
+    SELECT COUNT(SAPNO) INTO EMPCOUNT FROM "HANA_TRAINING.data::SKILLSET" 
+    WHERE DATEEND = 'Current' AND SAPNO = :SAPNO
+    GROUP BY SKILLID;
+END;
